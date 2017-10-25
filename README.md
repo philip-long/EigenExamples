@@ -1,12 +1,6 @@
-# Eigen 
+# Eigen
 
 "Eigen is a C++ template library for linear algebra: matrices, vectors, numerical solvers, and related algorithms."
-
-[Eigen Webpage](http://eigen.tuxfamily.org/index.php?title=Main_Page)
-
-References: [Here](http://eigen.tuxfamily.org/dox/group__TutorialAdvancedInitialization.html),
-            [here](http://eigen.tuxfamily.org/dox/group__DenseMatrixManipulation__chapter.html), and
-            [here](http://www.cc.gatech.edu/classes/AY2015/cs4496_spring/Eigen.html)
 
 The motivation of this page is to show some Eigen example calls.
 
@@ -43,33 +37,33 @@ Eigen::Matrix<double,3,3> rotationMatrix;
 
 rotationMatrix = rot.toRotationMatrix();
 
-Eigen::Quaterniond q(2, 0, 1, -3); 
-std::cout << "This quaternion consists of a scalar " << q.w() 
+Eigen::Quaterniond q(2, 0, 1, -3);
+std::cout << "This quaternion consists of a scalar " << q.w()
 << " and a vector " << std::endl << q.vec() << std::endl;
 
 q.normalize();
 
-std::cout << "To represent rotation, we need to normalize it such 
+std::cout << "To represent rotation, we need to normalize it such
 that its length is " << q.norm() << std::endl;
 
 Eigen::Vector3d vec(1, 2, -1);
 Eigen::Quaterniond p;
 p.w() = 0;
 p.vec() = vec;
-Eigen::Quaterniond rotatedP = q * p * q.inverse(); 
+Eigen::Quaterniond rotatedP = q * p * q.inverse();
 Eigen::Vector3d rotatedV = rotatedP.vec();
-std::cout << "We can now use it to rotate a vector " << std::endl 
+std::cout << "We can now use it to rotate a vector " << std::endl
 << vec << " to " << std::endl << rotatedV << std::endl;
 
 // convert a quaternion to a 3x3 rotation matrix:
-Eigen::Matrix3d R = q.toRotationMatrix(); 
+Eigen::Matrix3d R = q.toRotationMatrix();
 
-std::cout << "Compare with the result using an rotation matrix " 
+std::cout << "Compare with the result using an rotation matrix "
 << std::endl << R * vec << std::endl;
 
 Eigen::Quaterniond a = Eigen::Quaterniond::Identity();
 Eigen::Quaterniond b = Eigen::Quaterniond::Identity();
-Eigen::Quaterniond c; 
+Eigen::Quaterniond c;
 // Adding two quaternion as two 4x1 vectors is not supported by the Eigen API.
 //That is, c = a + b is not allowed. The solution is to add each element:
 
@@ -135,7 +129,7 @@ Eigen::MatrixXd A2 = Eigen::MatrixXd::Random(7, 9);
 std::cout << "The fourth row and 7th column element is " << A2(3, 6) << std::endl;
 
 Eigen::MatrixXd B2 = A2.block(1, 2, 3, 3);
-std::cout << "Take sub-matrix whose upper left corner is A(1, 2)" 
+std::cout << "Take sub-matrix whose upper left corner is A(1, 2)"
 << std::endl << B2 << std::endl;
 
 Eigen::VectorXd a2 = A2.col(1); // take the second column of A
@@ -147,3 +141,50 @@ Eigen::VectorXd d2 = b2.tail(2);// take the last two elements of b2
 ```
 
 
+# Eigen Beginner
+
+Include some **header files**, **Basic matrix manipulation**, please see [Modules and Header files](https://eigen.tuxfamily.org/dox/group__QuickRefPage.html).
+
+```cpp
+#include <iostream>
+#include <Eigen/Dense>
+using namespace Eigen;
+using namespace std;
+
+int main()
+{
+  // Matrix
+  MatrixXd m = MatrixXd::Random(3,3);
+  m = (m + MatrixXd::Constant(3,3,1.2)) * 50;
+  cout << "m =" << endl << m << endl;
+
+  // vector
+  VectorXd v(3);
+  v << 1, 2, 3;
+  cout << "m * v =" << endl << m * v << endl;
+}
+```
+
+```cpp
+MatrixXd m(2,2);
+m(0,0) = 3;
+m(1,0) = 2.5;
+m(0,1) = -1;
+m(1,1) = m(1,0) + m(0,1);
+
+// print matrix
+std::cout << m << std::endl;
+```
+
+
+
+
+# References
+
+- [Eigen Webpage](http://eigen.tuxfamily.org/index.php?title=Main_Page)
+- [Eigen Space transformations](https://eigen.tuxfamily.org/dox/group__TutorialGeometry.html)
+- [Eigen Getting started](https://eigen.tuxfamily.org/dox/GettingStarted.html)
+- [Eigen Quick reference guide](https://eigen.tuxfamily.org/dox/group__QuickRefPage.html)
+- [Eigen Advanced initialization](http://eigen.tuxfamily.org/dox/group__TutorialAdvancedInitialization.html)
+- [Dense matrix and array manipulation](http://eigen.tuxfamily.org/dox/group__DenseMatrixManipulation__chapter.html)
+- [Eigen Library Tutorial](http://www.cc.gatech.edu/classes/AY2015/cs4496_spring/Eigen.html)
