@@ -176,6 +176,11 @@ m(1,1) = m(1,0) + m(0,1);
 std::cout << m << std::endl;
 ```
 
+```cpp
+// matrix basic operator
+m2 = m + m1
+m2 = m*m1
+```
 
 
 
