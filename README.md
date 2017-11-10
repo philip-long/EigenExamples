@@ -193,3 +193,51 @@ m2 = m*m1
 - [Eigen Advanced initialization](http://eigen.tuxfamily.org/dox/group__TutorialAdvancedInitialization.html)
 - [Dense matrix and array manipulation](http://eigen.tuxfamily.org/dox/group__DenseMatrixManipulation__chapter.html)
 - [Eigen Library Tutorial](http://www.cc.gatech.edu/classes/AY2015/cs4496_spring/Eigen.html)
+
+
+
+
+# Transformations with TF Python interface
+```py
+from tf.transformations import *
+
+# all matrix output from tf.transformations is 4*4 Homogeneous Transformation Matrices
+
+# define directly from numpy array
+H = numpy.array([[1,0,0,0], [0,1,0,0], [0, 0, 1, 0], [0,0,0,1]])
+
+# unit Homogeneous Transformation Matrix
+I = identity_matrix()
+
+# translation matrix (NOTE: actually is rotation matrix is unit 3*3 matrix, and position vector is (0,0,0,1))
+Position = translation_matrix((0.1, 0.2, 0.3))
+
+# general Homogeneous Transformation matrix with R and P
+Rotation = I
+M = concatenate_matrices(Position, Rotation)
+
+# sequence transformation matrix muliplication
+Result = concatenate_matrices(M, M1, M2, M3, M4, M5)
+```
+
+Quaternion to Rotation Homogeneous matrix
+
+**NOTE:** quaternion only have four number (x,y,z,w) = xi + yj + zk + w
+```py
+# define quaternion directly from tuple, list, or numpy arrays.
+q = [0,0,0,1]
+
+# quaternion from angle-axis
+alpha = 0.123
+xaxis = (1, 0, 0)
+qx = quaternion_about_axis(alpha, xaxis)
+
+
+# quaternion multiply which align with rotation matrix multiply
+q = quaternion_multiply(qx, qy)
+```
+
+More deatil, please see [tf/transformations in ROS/geometry github](https://github.com/ros/geometry/blob/indigo-devel/tf/src/tf/transformations.py).
+
+## Reference
+- [tf/transformations in ROS/geometry github](https://github.com/ros/geometry/blob/indigo-devel/tf/src/tf/transformations.py)
