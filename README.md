@@ -184,7 +184,7 @@ m2 = m*m1
 
 
 
-# References
+## References
 
 - [Eigen Webpage](http://eigen.tuxfamily.org/index.php?title=Main_Page)
 - [Eigen Space transformations](https://eigen.tuxfamily.org/dox/group__TutorialGeometry.html)
@@ -195,9 +195,18 @@ m2 = m*m1
 - [Eigen Library Tutorial](http://www.cc.gatech.edu/classes/AY2015/cs4496_spring/Eigen.html)
 
 
+# Eigen transformations to KDL Frame and ROS Pose message
 
 
-# Transformations with TF Python interface
+## References
+ - [eigen_conversions](https://github.com/ros/geometry/tree/indigo-devel/eigen_conversions/src)
+ - [kdl_conversions](https://github.com/ros/geometry/tree/indigo-devel/kdl_conversions)
+
+
+
+# Space Transformations with TF transformations Python interface
+
+## TF Homogeneous transformations matrix Python interface
 ```py
 from tf.transformations import *
 
@@ -239,5 +248,20 @@ q = quaternion_multiply(qx, qy)
 
 More deatil, please see [tf/transformations in ROS/geometry github](https://github.com/ros/geometry/blob/indigo-devel/tf/src/tf/transformations.py).
 
+
+## Wrap Homogeneous transformations matrix to `PyKDL` Frame and ROS pose message
+```py
+# transform homogeneous_matrix (4*4 numpy arrary) to PyKDL Frame
+kdl_frame = fromMatrix(homogeneous_matrix)
+
+# PyKDL Frame to ROS Pose message
+pose_msg = toMsg(kdl_frame)
+```
+
+More detail, please see  [tf_conversions/posemath](https://github.com/ros/geometry/blob/indigo-devel/tf_conversions/src/tf_conversions/posemath.py), [PyKDL - Frame transformations (Python)](http://wiki.ros.org/kdl/Tutorials/Frame%20transformations%20%28Python%29).
+
+
 ## Reference
 - [tf/transformations in ROS/geometry github](https://github.com/ros/geometry/blob/indigo-devel/tf/src/tf/transformations.py)
+- [Frame transformations (Python)](http://wiki.ros.org/kdl/Tutorials/Frame%20transformations%20%28Python%29)
+- [PyKDL API interface](http://docs.ros.org/diamondback/api/kdl/html/python/index.html)
