@@ -261,6 +261,22 @@ pose_msg = toMsg(kdl_frame)
 More detail, please see  [tf_conversions/posemath](https://github.com/ros/geometry/blob/indigo-devel/tf_conversions/src/tf_conversions/posemath.py), [PyKDL - Frame transformations (Python)](http://wiki.ros.org/kdl/Tutorials/Frame%20transformations%20%28Python%29).
 
 
+## KDL C++ interface
+```cpp
+KDL::Frame object_base_kdl_frame;
+KDL::Frame base_kdl_frame;
+KDL::Frame rel_kdl_frame;
+
+rel_kdl_frame = KDL::Frame(KDL::Rotation::RPY(0, 0, 0),
+                                KDL::Vector(0.060022, 0, 0));
+object_base_kdl_frame = base_kdl_frame * rel_kdl_frame;
+tf::poseKDLToMsg(object_base_kdl_frame, object_base_pose);
+```
+
+参考： [KDL C++ API](http://docs.ros.org/indigo/api/orocos_kdl/html/geomprim.html), [KDL C++ Roation](http://docs.ros.org/indigo/api/orocos_kdl/html/classKDL_1_1Rotation.html), [KDL::Frame C++ Class Reference](http://docs.ros.org/indigo/api/orocos_kdl/html/classKDL_1_1Frame.html).
+
+
+
 ## Reference
 - [tf/transformations in ROS/geometry github](https://github.com/ros/geometry/blob/indigo-devel/tf/src/tf/transformations.py)
 - [Frame transformations (Python)](http://wiki.ros.org/kdl/Tutorials/Frame%20transformations%20%28Python%29)
