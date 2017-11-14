@@ -74,6 +74,43 @@ c.z() = a.z() + b.z();
 
 ```
 
+## Eigen Euler angle and fixed axis rotation (roll, pitch, yaw)
+```cpp
+// we use fixed axis rotation(rpy) to get rotation matrix
+
+//  roll, pitch, yaw = XYZ fixed axis rotation = Eurler angle ZYX
+Eigen::Quaterniond q = AngleAxisd(0.1*M_PI, Vector3d::UnitX())
+                      * AngleAxisd(0.2*M_PI, Vector3d::UnitY())
+                      * AngleAxisd(0.3*M_PI, Vector3d::UnitZ());
+
+Eigen::Matrix3d R = q.toRotationMatrix();
+
+
+// roll pitch yaw to rotation matrix directly
+Matrix3d R = AngleAxisd(PI, Vector3d::UnitX())
+        * AngleAxisd(0, Vector3d::UnitY())
+        * AngleAxisd(0, Vector3d::UnitZ());
+// return euler angles as sequence XYZ Euler angle from rotatiton matrix
+Vector3d euler_angles = R.eulerAngles(0,1,2); // 0: x axis, 1: y axis, 2: z axis
+
+// recompute the rotation matrix from eurler angles
+Matrix3d n;
+n = AngleAxisd(euler_angles[0], Vector3d::UnitX())
+   *AngleAxisd(euler_angles[1], Vector3d::UnitY())
+   *AngleAxisd(euler_angles[2], Vector3d::UnitZ());
+
+
+// return ZXZ euler angles from rotation matrix
+Vector3d ea = R.eulerAngles(2, 0, 2); // 2,0,2 = ZXZ
+```
+
+### References
+- [Creating a rotation matrix with pitch, yaw, roll using Eigen](https://stackoverflow.com/a/26297599)
+- [Roll pitch and yaw from Rotation matrix with Eigen Library](https://stackoverflow.com/a/27880029)
+- [Eigen Geometry module](https://eigen.tuxfamily.org/dox/group__Geometry__Module.html)
+
+
+
 ## Eigen::Affine3d()  
 Affine3d is a Pose type message( contains a Vector 3d and Quaterniond/RotationMatrix). It is great for computing several subsequent transformations.
 
