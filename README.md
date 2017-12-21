@@ -310,7 +310,10 @@ object_base_kdl_frame = base_kdl_frame * rel_kdl_frame;
 tf::poseKDLToMsg(object_base_kdl_frame, object_base_pose);
 ```
 
-参考： [KDL C++ API](http://docs.ros.org/indigo/api/orocos_kdl/html/geomprim.html), [KDL C++ Roation](http://docs.ros.org/indigo/api/orocos_kdl/html/classKDL_1_1Rotation.html), [KDL::Frame C++ Class Reference](http://docs.ros.org/indigo/api/orocos_kdl/html/classKDL_1_1Frame.html).
+References：
+- [KDL C++ API](http://docs.ros.org/indigo/api/orocos_kdl/html/geomprim.html)
+- [KDL C++ Roation](http://docs.ros.org/indigo/api/orocos_kdl/html/classKDL_1_1Rotation.html)
+- [KDL::Frame C++ Class Reference](http://docs.ros.org/indigo/api/orocos_kdl/html/classKDL_1_1Frame.html)
 
 
 
@@ -318,3 +321,49 @@ tf::poseKDLToMsg(object_base_kdl_frame, object_base_pose);
 - [tf/transformations in ROS/geometry github](https://github.com/ros/geometry/blob/indigo-devel/tf/src/tf/transformations.py)
 - [Frame transformations (Python)](http://wiki.ros.org/kdl/Tutorials/Frame%20transformations%20%28Python%29)
 - [PyKDL API interface](http://docs.ros.org/diamondback/api/kdl/html/python/index.html)
+
+
+
+# Transforms3d python package
+[Transforms3d](http://matthew-brett.github.io/transforms3d/index.html) python package is a standalone and general space transform python package which can replace the ROS [tf](https://github.com/ros/geometry/tree/indigo-devel/tf) sub-module [transformations](https://github.com/ros/geometry/blob/indigo-devel/tf/src/tf/transformations.py) about space transform. And it support `python3` and `python2`, and it only depend on `numpy`.
+
+## Install transforms3d
+
+```py
+pip install transforms3d
+```
+
+## Homogeneous Affine Matrix
+
+```py
+import transforms3d as tf
+import numpy as np
+
+T = [20, 30, 40] # translations
+R = [[0, -1, 0], [1, 0, 0], [0, 0, 1]] # rotation matrix
+Z = [2.0, 3.0, 4.0] # zooms
+
+A = tf.affines.compose(T, R, Z)
+```
+output:
+
+```py
+array([[  0.,  -3.,   0.,  20.],
+       [  2.,   0.,   0.,  30.],
+       [  0.,   0.,   4.,  40.],
+       [  0.,   0.,   0.,   1.]])
+```
+
+## quaternions
+
+```py
+# q = (w, x, y, z) = w+xi+yj+zk
+q = [0, 1, 0, 0]
+
+# quaternion to rotation matrix
+M = tf.quaternions.quat2mat(q)
+```
+
+
+## Reference
+- [Transforms3d](http://matthew-brett.github.io/transforms3d/index.html)
