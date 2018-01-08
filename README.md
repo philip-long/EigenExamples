@@ -176,7 +176,7 @@ Eigen::VectorXd c2 = a2.head(3);// take the first three elements of a2
 Eigen::VectorXd d2 = b2.tail(2);// take the last two elements of b2
 
 ```
-# Eigen Transform
+## Eigen Transform
 Class for rigid body transformations
 
 ```cpp
