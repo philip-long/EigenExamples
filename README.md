@@ -176,8 +176,71 @@ Eigen::VectorXd c2 = a2.head(3);// take the first three elements of a2
 Eigen::VectorXd d2 = b2.tail(2);// take the last two elements of b2
 
 ```
+# Eigen Transform
+Class for rigid body transformations
+
+```cpp
+    Eigen::Vector3d t1(1, 2, -1);
+    Eigen::Vector3d t5;
+    Eigen::Vector3d t4(10,0.52,0.5);
+    Eigen::Quaterniond q1(2, 0, 1, -3);
+    Eigen::Quaterniond q4(2, 5,0.5, -5);
+    Eigen::Transform<double,3,Eigen::Affine>  T1,T2,T3,T4,T5;
+    T1.translation()=t1;
+    T4.translation()=t4;
+    q1.normalize();
+    q4.normalize();
+    T1.linear()=q1.toRotationMatrix(); // define rotation matrix
+    T4.linear()=q4.toRotationMatrix(); // define rotation matrix
+
+    std::cout<<"T1 =    "<<T1.linear().row(0)<<" "<<T1.translation().row(0)<<std::endl;
+    std::cout<<"        "<<T1.linear().row(1)<<" "<<T1.translation().row(1)<<std::endl;
+    std::cout<<"        "<<T1.linear().row(2)<<" "<<T1.translation().row(2)<<std::endl;
+    std::cout<<"        "<<0.0 <<" "<<0.0<<" "<<0.0<<" "<<1.0<<std::endl;
+
+    std::cout<<"T4 =    "<<T4.linear().row(0)<<" "<<T4.translation().row(0)<<std::endl;
+    std::cout<<"        "<<T4.linear().row(1)<<" "<<T4.translation().row(1)<<std::endl;
+    std::cout<<"        "<<T4.linear().row(2)<<" "<<T4.translation().row(2)<<std::endl;
+    std::cout<<"        "<<0.0 <<" "<<0.0<<" "<<0.0<<" "<<1.0<<std::endl;
+
+    // Obtain the inverse of matrix T1 i.e.
+    // if T1 = [R1    P1]
+    //         [0 0 0  1]
+
+    // then T2 = [transpose(R1) -transpose(R1)*P1]
+    //           [0 0 0              1           ]
+
+    T2=T1.inverse(Eigen::TransformTraits::Affine) ;
 
 
+    std::cout<<"T2 =    "<<T2.linear().row(0)<<" "<<T2.translation().row(0)<<std::endl;
+    std::cout<<"        "<<T2.linear().row(1)<<" "<<T2.translation().row(1)<<std::endl;
+    std::cout<<"        "<<T2.linear().row(2)<<" "<<T2.translation().row(2)<<std::endl;
+    std::cout<<"        "<<0.0 <<" "<<0.0<<" "<<0.0<<" "<<1.0<<std::endl;
+
+    // Verify inverse is identity
+    T3=T2*T1;
+
+
+    std::cout<<"T3 =    "<<T3.linear().row(0)<<" "<<T3.translation().row(0)<<std::endl;
+    std::cout<<"        "<<T3.linear().row(1)<<" "<<T3.translation().row(1)<<std::endl;
+    std::cout<<"        "<<T3.linear().row(2)<<" "<<T3.translation().row(2)<<std::endl;
+    std::cout<<"        "<<0.0 <<" "<<0.0<<" "<<0.0<<" "<<1.0<<std::endl;
+
+    // Spatial Transformations
+    T5=T2*T4*T1;
+
+    std::cout<<"T5 =    "<<T5.linear().row(0)<<" "<<T5.translation().row(0)<<std::endl;
+    std::cout<<"        "<<T5.linear().row(1)<<" "<<T5.translation().row(1)<<std::endl;
+    std::cout<<"        "<<T5.linear().row(2)<<" "<<T5.translation().row(2)<<std::endl;
+    std::cout<<"        "<<0.0 <<" "<<0.0<<" "<<0.0<<" "<<1.0<<std::endl;
+
+    // Spatial transformation of a translation vector
+    t5=T5*t1;
+
+    std::cout<<t5.col(0)<<std::endl;
+    
+```
 # Eigen Beginner
 
 Include some **header files**, **Basic matrix manipulation**, please see [Modules and Header files](https://eigen.tuxfamily.org/dox/group__QuickRefPage.html).
