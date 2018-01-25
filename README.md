@@ -183,7 +183,7 @@ Class for rigid body transformations
     Eigen::Vector3d t1(1, 2, -1);
     Eigen::Vector3d t5;
     Eigen::Vector3d t4(10,0.52,0.5);
-    Eigen::Quaterniond q1(2, 0, 1, -3);
+    Eigen::Quaterniond q1(2, 0, 1, -3); // Quaterniond(w,x,y,z)
     Eigen::Quaterniond q4(2, 5,0.5, -5);
     Eigen::Transform<double,3,Eigen::Affine>  T1,T2,T3,T4,T5;
     T1.translation()=t1;
